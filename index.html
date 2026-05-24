@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Skills and AI Readiness Matrix | Beyond Diversity Inc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal:         #272727;
+      --green:            #2D4A35;
+      --green-mid:        #3B6047;
+      --green-bg:         #A8CCAC;
+      --gold:             #C9A84C;
+      --gold-vivid:       #B8940A;
+      --gold-bg:          #EDD97A;
+      --terracotta:       #C4694A;
+      --terracotta-bg:    #F0A88A;
+      --gray-bar:         #5A5550;
+      --gray-bg:          #C8C2B6;
+      --cream:            #F5F0E8;
+      --cream-dark:       #EDE7DB;
+      --white:            #FFFFFF;
+      --text:             #272727;
+      --text-mid:         #5A5550;
+      --text-muted:       #8A8580;
+      --border:           rgba(39,39,39,0.12);
+      --border-strong:    rgba(39,39,39,0.22);
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-weight: 300;
+    }
+
+    /* HEADER */
+    .hdr {
+      background: var(--charcoal);
+      padding: 28px 44px 22px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .hdr::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+    }
+    .hdr-eyebrow {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .hdr-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .hdr-sub {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(245,240,232,0.5);
+      letter-spacing: 0.03em;
+    }
+    .hdr-session {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(245,240,232,0.28);
+      letter-spacing: 0.05em;
+      margin-top: 3px;
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px 44px 40px;
+    }
+
+    /* INSTRUCTION */
+    .instruction {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--terracotta);
+      flex-shrink: 0;
+    }
+    .instruction p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.015em;
+    }
+    .instruction strong { color: var(--text-mid); font-weight: 400; }
+
+    /* SCORES */
+    .scores {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+    .score-block label {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .score-label-wrap { flex: 1; padding-right: 16px; }
+    .score-axis-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 3px;
+    }
+    .score-sublabel {
+      font-size: 10px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+    .score-readout {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 500;
+      color: var(--charcoal);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 2px;
+      background: var(--cream-dark);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      margin-bottom: 8px;
+      display: block;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--gold);
+      cursor: grab;
+      transition: transform 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.2);
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--white);
+      cursor: grab;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* MATRIX AREA */
+    .matrix-area {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 8px;
+    }
+    .y-label-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 18px;
+      flex-shrink: 0;
+      padding-bottom: 30px;
+    }
+    .axis-end {
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    .axis-name-vert {
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: 300;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .matrix-col { flex: 1; }
+
+    .matrix-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 68%;
+      border-radius: 3px;
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      cursor: crosshair;
+      user-select: none;
+      touch-action: none;
+    }
+    .matrix-inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+
+    /* QUADRANT CELLS */
+    .qc {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 18px 18px 18px 22px;
+      position: relative;
+      transition: opacity 0.3s ease;
+    }
+    .qc::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+    }
+    .qc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .qc-tag {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.4;
+      opacity: 0.75;
+    }
+
+    /* Foundation: forest green */
+    #qc-foundation { background: var(--green-bg); border-right: 1px solid rgba(39,39,39,0.15); border-bottom: 1px solid rgba(39,39,39,0.15); }
+    #qc-foundation::before { background: var(--green); }
+    #qc-foundation .qc-name { color: #1A2E20; }
+    #qc-foundation .qc-tag  { color: #1A2E20; }
+
+    /* Leverage: gold */
+    #qc-leverage { background: var(--gold-bg); border-bottom: 1px solid rgba(39,39,39,0.15); }
+    #qc-leverage::before { background: var(--gold-vivid); }
+    #qc-leverage .qc-name { color: #5C3E00; }
+    #qc-leverage .qc-tag  { color: #5C3E00; }
+
+    /* Blind Spot: gray */
+    #qc-blind { background: var(--gray-bg); border-right: 1px solid rgba(39,39,39,0.15); }
+    #qc-blind::before { background: var(--gray-bar); }
+    #qc-blind .qc-name { color: #2E2C28; }
+    #qc-blind .qc-tag  { color: #2E2C28; }
+
+    /* Risk: terracotta */
+    #qc-risk { background: var(--terracotta-bg); }
+    #qc-risk::before { background: var(--terracotta); }
+    #qc-risk .qc-name { color: #6A2810; }
+    #qc-risk .qc-tag  { color: #6A2810; }
+
+    /* Center dividers */
+    .div-v {
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 0;
+      border-left: 1.5px dashed rgba(39,39,39,0.25);
+      pointer-events: none;
+      z-index: 5;
+    }
+    .div-h {
+      position: absolute;
+      top: 50%; left: 0; right: 0;
+      height: 0;
+      border-top: 1.5px dashed rgba(39,39,39,0.25);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* MARKER */
+    #marker {
+      position: absolute;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--gold), 0 4px 16px rgba(201,168,76,0.45);
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      z-index: 20;
+      left: 50%; top: 50%;
+      transition: left 0.14s ease, top 0.14s ease;
+    }
+    #marker.dragging {
+      cursor: grabbing;
+      transition: none;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    #marker::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      opacity: 0;
+      animation: ring 2.4s ease-in-out infinite;
+    }
+    @keyframes ring {
+      0%   { transform: scale(0.85); opacity: 0.7; }
+      60%  { transform: scale(1.5);  opacity: 0; }
+      100% { transform: scale(0.85); opacity: 0; }
+    }
+    #marker.dragging::after { animation: none; }
+
+    /* Coordinate tooltip on marker */
+    #marker-label {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--charcoal);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      padding: 4px 9px;
+      border-radius: 3px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 30;
+    }
+    #marker-label::after {
+      content: '';
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: var(--charcoal);
+    }
+
+    /* X-AXIS */
+    .x-axis {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 7px;
+    }
+    .x-axis span {
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* RESULT PANEL */
+    .result-panel {
+      margin-top: 28px;
+      background: var(--white);
+      border: 1px solid var(--border-strong);
+      border-left: 5px solid var(--cream-dark);
+      border-radius: 3px;
+      min-height: 72px;
+      overflow: hidden;
+      transition: border-left-color 0.35s ease;
+    }
+    .result-body { padding: 22px 28px; }
+    .result-waiting {
+      font-size: 13px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+    .result-content { display: none; }
+    .result-q-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .result-q-sub {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .result-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 16px;
+      max-width: 680px;
+    }
+    .result-action {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--charcoal);
+      padding-left: 14px;
+      border-left: 3px solid var(--gold);
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    .ftr {
+      background: var(--charcoal);
+      padding: 14px 44px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .ftr-brand   { font-size: 10px; color: rgba(245,240,232,0.38); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 300; }
+    .ftr-session { font-size: 10px; color: rgba(245,240,232,0.22); letter-spacing: 0.04em; font-weight: 300; }
+    .ftr-url     { font-size: 10px; color: var(--gold); opacity: 0.65; letter-spacing: 0.05em; font-weight: 300; }
+
+    .screenshot-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    @media (max-width: 620px) {
+      .hdr { padding: 20px 22px 18px; }
+      .hdr-title { font-size: 24px; }
+      .main { padding: 22px 22px 32px; }
+      .scores { grid-template-columns: 1fr; gap: 20px; }
+      .matrix-wrap { padding-bottom: 84%; }
+      .qc { padding: 12px 12px 12px 16px; }
+      .qc-name { font-size: 13px; }
+      .qc-tag { font-size: 8px; }
+      .result-q-name { font-size: 22px; }
+      .ftr { padding: 12px 22px; flex-direction: column; gap: 5px; text-align: center; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="hdr">
+    <p class="hdr-eyebrow">Beyond Diversity Inc &nbsp;&#183;&nbsp; The People Performance Lab</p>
+    <h1 class="hdr-title">Human Skills and AI Readiness Matrix</h1>
+    <p class="hdr-sub">Plot your organization. Identify your priority action. Take a screenshot.</p>
+    <p class="hdr-session">Session 1 &nbsp;&#183;&nbsp; The Irreplaceable Advantage &nbsp;&#183;&nbsp; June 16, 2026</p>
+  </header>
+
+  <main class="main">
+
+    <div class="instruction">
+      <div class="dot"></div>
+      <p>Enter your scores using the sliders, or <strong>drag the marker</strong> directly onto the matrix. Your result appears below automatically.</p>
+    </div>
+
+    <div class="scores">
+
+      <div class="score-block">
+        <label for="y-slider">
+          <div class="score-label-wrap">
+            <span class="score-axis-tag">Y, Human Skill Strength</span>
+            <span class="score-sublabel">Average your Pulse scores for Adaptability Velocity, Learning Agility, and Decision-Making Effectiveness</span>
+          </div>
+          <span class="score-readout" id="y-read">3.0</span>
+        </label>
+        <input type="range" id="y-slider" min="1" max="5" step="0.1" value="3">
+        <div class="scale-labels"><span>1, Low</span><span>5, High</span></div>
+      </div>
+
+      <div class="score-block">
+        <label for="x-slider">
+          <div class="score-label-wrap">
+            <span class="score-axis-tag">X, AI Exposure</span>
+            <span class="score-sublabel">How much of your core workflows are being automated or disrupted right now and in the next 12 months</span>
+          </div>
+          <span class="score-readout" id="x-read">3.0</span>
+        </label>
+        <input type="range" id="x-slider" min="1" max="5" step="0.1" value="3">
+        <div class="scale-labels"><span>1, Minimal</span><span>5, Significant</span></div>
+      </div>
+
+    </div>
+
+    <div class="matrix-area">
+
+      <div class="y-label-col">
+        <span class="axis-end">High</span>
+        <span class="axis-name-vert">Human Skill Strength</span>
+        <span class="axis-end">Low</span>
+      </div>
+
+      <div class="matrix-col">
+        <div class="matrix-wrap" id="matrix">
+          <div class="matrix-inner">
+
+            <div class="qc" id="qc-foundation">
+              <div class="qc-name">Foundation Zone</div>
+              <div class="qc-tag">Low AI &nbsp;&#183;&nbsp; High Human Skills</div>
+            </div>
+
+            <div class="qc" id="qc-leverage">
+              <div class="qc-name">Leverage Zone</div>
+              <div class="qc-tag">High AI &nbsp;&#183;&nbsp; High Human Skills</div>
+            </div>
+
+            <div class="qc" id="qc-blind">
+              <div class="qc-name">Blind Spot</div>
+              <div class="qc-tag">Low AI &nbsp;&#183;&nbsp; Low Human Skills</div>
+            </div>
+
+            <div class="qc" id="qc-risk">
+              <div class="qc-name">Risk Zone</div>
+              <div class="qc-tag">High AI &nbsp;&#183;&nbsp; Low Human Skills</div>
+            </div>
+
+          </div>
+          <div class="div-v"></div>
+          <div class="div-h"></div>
+          <div id="marker">
+            <div id="marker-label">Y 3.0 &nbsp;&#183;&nbsp; X 3.0</div>
+          </div>
+        </div>
+
+        <div class="x-axis">
+          <span>Low</span>
+          <span>AI Exposure</span>
+          <span>High</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result-panel" id="result-panel">
+      <div class="result-body">
+        <p class="result-waiting" id="result-waiting">Move the marker to your organization's position to see your result.</p>
+        <div class="result-content" id="result-content">
+          <div class="result-q-name" id="res-name"></div>
+          <div class="result-q-sub"  id="res-sub"></div>
+          <p  class="result-desc"    id="res-desc"></p>
+          <p  class="result-action"  id="res-action"></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="screenshot-note">Take a screenshot to save your result</p>
+
+  </main>
+
+  <footer class="ftr">
+    <span class="ftr-brand">Beyond Diversity Inc</span>
+    <span class="ftr-session">The People Performance Lab &nbsp;&#183;&nbsp; Session 1 &nbsp;&#183;&nbsp; June 16, 2026</span>
+    <span class="ftr-url">matrix.beyonddiversityinc.com</span>
+  </footer>
+
+  <script>
+    var QUADRANTS = {
+      foundation: {
+        name:      'Foundation Zone',
+        sub:       'Low AI Exposure, High Human Skill Strength',
+        desc:      'You have a strong human base and time to be strategic. Use this runway to develop your AI approach with intentionality, not urgency. The window to build from a position of strength will not stay open forever. Organizations here are ahead of the curve, and the priority is using that time wisely.',
+        action:    'Priority action: Map your AI strategy now, before external pressure forces the decision. You have the rare advantage of choosing your own timeline.',
+        barColor:  '#2D4A35',
+        nameColor: '#1A2E20'
+      },
+      leverage: {
+        name:      'Leverage Zone',
+        sub:       'High AI Exposure, High Human Skill Strength',
+        desc:      'This is your competitive advantage. AI is amplifying strong human capability and the organizations here are pulling ahead. You have built something genuinely rare, the combination of technological exposure and human capability that high-performing organizations spend years trying to develop.',
+        action:    'Priority action: Protect and build. This advantage is not self-sustaining. Continued intentional investment in your people is what keeps the gap wide.',
+        barColor:  '#B8940A',
+        nameColor: '#5C3E00'
+      },
+      blind: {
+        name:      'Blind Spot',
+        sub:       'Low AI Exposure, Low Human Skill Strength',
+        desc:      'Change is coming whether you are ready or not. The lower AI exposure gives you time, but the window is shorter than it looks. Organizations here have the most to gain from moving early, and the most to lose from waiting. The organizations that navigate the AI transition smoothly are the ones that built human capability before they needed it.',
+        action:    'Priority action: Start building human capability now, before AI pressure arrives and forces reactive decisions under duress.',
+        barColor:  '#5A5550',
+        nameColor: '#2E2C28'
+      },
+      risk: {
+        name:      'Risk Zone',
+        sub:       'High AI Exposure, Low Human Skill Strength',
+        desc:      'The gap between what AI is taking on and what your people are ready for is widening. This requires urgent, intentional action. You are not alone in this quadrant. It is the most common position we see in organizations right now. But staying here is not a viable strategy. The cost of this gap shows up in your numbers before you name it.',
+        action:    'Priority action: Assess your three critical indicators now. Build a human development plan that matches your AI investment, dollar for dollar.',
+        barColor:  '#C4694A',
+        nameColor: '#6A2810'
+      }
+    };
+
+    var ySlider  = document.getElementById('y-slider');
+    var xSlider  = document.getElementById('x-slider');
+    var yRead    = document.getElementById('y-read');
+    var xRead    = document.getElementById('x-read');
+    var marker   = document.getElementById('marker');
+    var mLabel   = document.getElementById('marker-label');
+    var matrix   = document.getElementById('matrix');
+    var resPanel = document.getElementById('result-panel');
+    var resWait  = document.getElementById('result-waiting');
+    var resCont  = document.getElementById('result-content');
+    var resName  = document.getElementById('res-name');
+    var resSub   = document.getElementById('res-sub');
+    var resDesc  = document.getElementById('res-desc');
+    var resAct   = document.getElementById('res-action');
+
+    var cells = {
+      foundation: document.getElementById('qc-foundation'),
+      leverage:   document.getElementById('qc-leverage'),
+      blind:      document.getElementById('qc-blind'),
+      risk:       document.getElementById('qc-risk')
+    };
+
+    var currentQ = null;
+    var dragging = false;
+
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+    function getQ(xp, yp) {
+      if (xp < 0.5 && yp < 0.5) return 'foundation';
+      if (xp >= 0.5 && yp < 0.5) return 'leverage';
+      if (xp < 0.5 && yp >= 0.5) return 'blind';
+      return 'risk';
+    }
+
+    function update(xp, yp, fromSliders) {
+      xp = clamp(xp, 0.02, 0.98);
+      yp = clamp(yp, 0.02, 0.98);
+
+      marker.style.left = (xp * 100) + '%';
+      marker.style.top  = (yp * 100) + '%';
+
+      var xScore = Math.round((xp * 4 + 1) * 10) / 10;
+      var yScore = Math.round(((1 - yp) * 4 + 1) * 10) / 10;
+
+      mLabel.innerHTML = 'Y ' + yScore.toFixed(1) + ' &nbsp;&#183;&nbsp; X ' + xScore.toFixed(1);
+
+      if (!fromSliders) {
+        xSlider.value     = xScore;
+        ySlider.value     = yScore;
+        xRead.textContent = xScore.toFixed(1);
+        yRead.textContent = yScore.toFixed(1);
+      }
+
+      var q = getQ(xp, yp);
+      if (q === currentQ) return;
+      currentQ = q;
+
+      Object.keys(cells).forEach(function(k) {
+        cells[k].style.opacity = k === q ? '1' : '0.28';
+      });
+
+      var d = QUADRANTS[q];
+      resPanel.style.borderLeftColor = d.barColor;
+      resWait.style.display  = 'none';
+      resCont.style.display  = 'block';
+      resName.textContent    = d.name;
+      resName.style.color    = d.nameColor;
+      resSub.textContent     = d.sub;
+      resDesc.textContent    = d.desc;
+      resAct.textContent     = d.action;
+    }
+
+    function fromSliders() {
+      var y = parseFloat(ySlider.value);
+      var x = parseFloat(xSlider.value);
+      yRead.textContent = y.toFixed(1);
+      xRead.textContent = x.toFixed(1);
+      update((x - 1) / 4, 1 - (y - 1) / 4, true);
+    }
+
+    ySlider.addEventListener('input', fromSliders);
+    xSlider.addEventListener('input', fromSliders);
+
+    function coords(e) {
+      var r  = matrix.getBoundingClientRect();
+      var cx = e.touches ? e.touches[0].clientX : e.clientX;
+      var cy = e.touches ? e.touches[0].clientY : e.clientY;
+      return { xp: (cx - r.left) / r.width, yp: (cy - r.top) / r.height };
+    }
+
+    marker.addEventListener('mousedown', function(e) {
+      dragging = true;
+      marker.classList.add('dragging');
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    document.addEventListener('mouseup', function() {
+      dragging = false;
+      marker.classList.remove('dragging');
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      var p = coords(e);
+      update(p.xp, p.yp, false);
+    });
+    matrix.addEventListener('click', function(e) {
+      if (dragging) return;
+      var p = coords(e);
+      update(p.xp, p.yp, false);
+    });
+    marker.addEventListener('touchstart', function(e) {
+      dragging = true;
+      marker.classList.add('dragging');
+      e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('touchend', function() {
+      dragging = false;
+      marker.classList.remove('dragging');
+    });
+    document.addEventListener('touchmove', function(e) {
+      if (!dragging) return;
+      var p = coords(e);
+      update(p.xp, p.yp, false);
+      e.preventDefault();
+    }, { passive: false });
+  </script>
+
+</body>
+</html>
